@@ -1,0 +1,3 @@
+main: io.github.portlek.bukkitlocation.FakePlugin
+version: '1.0'
+name: FakePlugin
