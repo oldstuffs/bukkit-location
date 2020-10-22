@@ -30,34 +30,49 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 
-@UtilityClass
-public class RandomUtil {
+/**
+ * a class that contains utility methods for {@link Random}.
+ */
+public final class RandomUtil {
 
-    public final Random RANDOM = new SecureRandom();
+  /**
+   * a random cache.
+   */
+  public static final Random RANDOM = new SecureRandom();
 
-    @NotNull
-    public <T> List<T> chooseRandoms(@NotNull final List<T> list, final int limit, final boolean duplicate) {
-        if (list.size() <= limit && !duplicate) {
-            return Collections.emptyList();
-        }
-        final List<T> things = new ArrayList<>();
-        int limitClone = limit;
-        while (limitClone > 0) {
-            final T thing = list.get(RandomUtil.random(list.size()));
-            if (things.contains(thing) && !duplicate) {
-                continue;
-            }
-            things.add(thing);
-            --limitClone;
-        }
-        return things;
+  /**
+   * ctor.
+   */
+  private RandomUtil() {
+  }
+
+  /**
+   * chooses objects from the given list with the given limit.
+   *
+   * @param list the list to choose.
+   * @param limit the limit to choose.
+   * @param duplicate the duplicate to check if the object is already in the result list.
+   * @param <T> the object type.
+   *
+   * @return a random chosen list.
+   */
+  @NotNull
+  public static <T> List<T> chooseRandoms(@NotNull final List<T> list, final int limit, final boolean duplicate) {
+    if (list.size() <= limit && !duplicate) {
+      return Collections.emptyList();
     }
-
-    private int random(final int seed) {
-        return RandomUtil.RANDOM.nextInt(seed);
+    final List<T> things = new ArrayList<>();
+    int limitClone = limit;
+    while (limitClone > 0) {
+      final T thing = list.get(RandomUtil.RANDOM.nextInt(list.size()));
+      if (things.contains(thing) && !duplicate) {
+        continue;
+      }
+      things.add(thing);
+      --limitClone;
     }
-
+    return things;
+  }
 }
