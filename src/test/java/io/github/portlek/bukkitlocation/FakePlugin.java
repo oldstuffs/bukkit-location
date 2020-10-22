@@ -32,28 +32,24 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 
 public final class FakePlugin extends JavaPlugin {
 
-    public FakePlugin() {
-    }
+  public FakePlugin() {
+  }
 
-    public FakePlugin(final JavaPluginLoader loader, final PluginDescriptionFile description,
-                      final File dataFolder, final File file) {
-        super(loader, description, dataFolder, file);
-    }
+  public FakePlugin(final JavaPluginLoader loader, final PluginDescriptionFile description,
+                    final File dataFolder, final File file) {
+    super(loader, description, dataFolder, file);
+  }
 
-    @Override
-    public void onLoad() {
+  @Override
+  public void onLoad() {
+  }
 
-    }
+  @Override
+  public void onDisable() {
+  }
 
-    @Override
-    public void onDisable() {
-
-    }
-
-    @Override
-    public void onEnable() {
-
-    }
-
+  @Override
+  public void onEnable() {
+  }
 }
 
