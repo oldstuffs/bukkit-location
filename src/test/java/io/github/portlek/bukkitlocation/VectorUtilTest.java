@@ -28,10 +28,10 @@ final class VectorUtilTest {
 
   @Test
   void rotateAroundAxisX() {
-    final Vector vector = VectorUtil.rotateAroundAxisX(new Vector(10, 10, 10), 180.0d);
-    final int x = vector.getBlockX();
-    final int y = vector.getBlockY();
-    final int z = vector.getBlockZ();
+    final var vector = VectorUtil.rotateAroundAxisX(new Vector(10, 10, 10), 180.0d);
+    final var x = vector.getBlockX();
+    final var y = vector.getBlockY();
+    final var z = vector.getBlockZ();
     new Assertion<>(
       "Couldn't rotate around axis X!",
       x,
@@ -51,10 +51,10 @@ final class VectorUtilTest {
 
   @Test
   void rotateAroundAxisY() {
-    final Vector vector = VectorUtil.rotateAroundAxisY(new Vector(10, 10, 10), 180.0d);
-    final int x = vector.getBlockX();
-    final int y = vector.getBlockY();
-    final int z = vector.getBlockZ();
+    final var vector = VectorUtil.rotateAroundAxisY(new Vector(10, 10, 10), 180.0d);
+    final var x = vector.getBlockX();
+    final var y = vector.getBlockY();
+    final var z = vector.getBlockZ();
     new Assertion<>(
       "Couldn't rotate around axis Y!",
       x,
@@ -74,10 +74,10 @@ final class VectorUtilTest {
 
   @Test
   void rotateAroundAxisZ() {
-    final Vector vector = VectorUtil.rotateAroundAxisZ(new Vector(10, 10, 10), 180.0d);
-    final int x = vector.getBlockX();
-    final int y = vector.getBlockY();
-    final int z = vector.getBlockZ();
+    final var vector = VectorUtil.rotateAroundAxisZ(new Vector(10, 10, 10), 180.0d);
+    final var x = vector.getBlockX();
+    final var y = vector.getBlockY();
+    final var z = vector.getBlockZ();
     new Assertion<>(
       "Couldn't rotate around axis Z!",
       x,
@@ -97,10 +97,10 @@ final class VectorUtilTest {
 
   @Test
   void rotateVector() {
-    final Vector vector = VectorUtil.rotateVector(new Vector(10, 10, 10), 10.0d, 20.0d, 30.0d);
-    final int x = vector.getBlockX();
-    final int y = vector.getBlockY();
-    final int z = vector.getBlockZ();
+    final var vector = VectorUtil.rotateVector(new Vector(10, 10, 10), 10.0d, 20.0d, 30.0d);
+    final var x = vector.getBlockX();
+    final var y = vector.getBlockY();
+    final var z = vector.getBlockZ();
     new Assertion<>(
       "Couldn't rotate vector!",
       x,
@@ -120,10 +120,10 @@ final class VectorUtilTest {
 
   @Test
   void testRotateVector() {
-    final Vector vector = VectorUtil.rotateVector(new Vector(10, 10, 10), 180.0f, 90.0f);
-    final int x = vector.getBlockX();
-    final int y = vector.getBlockY();
-    final int z = vector.getBlockZ();
+    final var vector = VectorUtil.rotateVector(new Vector(10, 10, 10), 180.0f, 90.0f);
+    final var x = vector.getBlockX();
+    final var y = vector.getBlockY();
+    final var z = vector.getBlockZ();
     new Assertion<>(
       "Couldn't rotate vector!",
       x,
@@ -143,11 +143,11 @@ final class VectorUtilTest {
 
   @Test
   void testRotateVector1() {
-    final Location location = new Location(VectorUtilTest.serverMock.getWorld("world"), 100.0d, 200.0d, 300.0d);
-    final Vector vector = VectorUtil.rotateVector(new Vector(10, 10, 10), location);
-    final int x = vector.getBlockX();
-    final int y = vector.getBlockY();
-    final int z = vector.getBlockZ();
+    final var location = new Location(VectorUtilTest.serverMock.getWorld("world"), 100.0d, 200.0d, 300.0d);
+    final var vector = VectorUtil.rotateVector(new Vector(10, 10, 10), location);
+    final var x = vector.getBlockX();
+    final var y = vector.getBlockY();
+    final var z = vector.getBlockZ();
     new Assertion<>(
       "Couldn't rotate vector!",
       x,

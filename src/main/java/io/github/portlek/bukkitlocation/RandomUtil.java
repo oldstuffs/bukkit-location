@@ -63,10 +63,10 @@ public final class RandomUtil {
     if (list.size() <= limit && !duplicate) {
       return Collections.emptyList();
     }
-    final List<T> things = new ArrayList<>();
-    int limitClone = limit;
+    final var things = new ArrayList<T>();
+    var limitClone = limit;
     while (limitClone > 0) {
-      final T thing = list.get(RandomUtil.RANDOM.nextInt(list.size()));
+      final var thing = list.get(RandomUtil.RANDOM.nextInt(list.size()));
       if (things.contains(thing) && !duplicate) {
         continue;
       }

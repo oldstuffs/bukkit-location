@@ -27,7 +27,6 @@ package io.github.portlek.bukkitlocation;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -53,18 +52,6 @@ public final class LocationUtil {
   }
 
   /**
-   * calculates the center bottom of the given location.
-   *
-   * @param location the location to calculate.
-   *
-   * @return location of the center from the given location.
-   */
-  @NotNull
-  public static Location centeredOn(@NotNull final Location location) {
-    return LocationUtil.centered(location, 0.1d);
-  }
-
-  /**
    * calculates the center of the given location.
    *
    * @param location the location to calculate.
@@ -77,18 +64,15 @@ public final class LocationUtil {
   }
 
   /**
-   * gets the world of the given location.
+   * calculates the center bottom of the given location.
    *
-   * @param location the location to get.
+   * @param location the location to calculate.
    *
-   * @return world of the location.
-   *
-   * @throws IllegalStateException if the given location has not a world.
+   * @return location of the center from the given location.
    */
   @NotNull
-  public static World validWorld(@NotNull final Location location) {
-    return Optional.ofNullable(location.getWorld()).orElseThrow(() ->
-      new IllegalStateException("World of the location cannot be null!"));
+  public static Location centeredOn(@NotNull final Location location) {
+    return LocationUtil.centered(location, 0.1d);
   }
 
   /**
@@ -100,18 +84,18 @@ public final class LocationUtil {
    */
   @NotNull
   public static Optional<Location> fromKey(@NotNull final String key) {
-    final Matcher match = LocationUtil.PATTERN.matcher(key
+    final var match = LocationUtil.PATTERN.matcher(key
       .replace("_", ".")
       .replace("/", ":"));
     if (match.matches()) {
-      final World world = Bukkit.getWorld(match.group("world"));
-      final double x = NumberConversions.toDouble(match.group("x"));
-      final double y = NumberConversions.toDouble(match.group("y"));
-      final double z = NumberConversions.toDouble(match.group("z"));
-      final Float yaw = Optional.ofNullable(match.group("yaw"))
+      final var world = Bukkit.getWorld(match.group("world"));
+      final var x = NumberConversions.toDouble(match.group("x"));
+      final var y = NumberConversions.toDouble(match.group("y"));
+      final var z = NumberConversions.toDouble(match.group("z"));
+      final var yaw = Optional.ofNullable(match.group("yaw"))
         .map(NumberConversions::toFloat)
         .orElse(0.0f);
-      final Float pitch = Optional.ofNullable(match.group("pitch"))
+      final var pitch = Optional.ofNullable(match.group("pitch"))
         .map(NumberConversions::toFloat)
         .orElse(0.0f);
       return Optional.of(new Location(world, x, y, z, yaw, pitch));
@@ -128,19 +112,27 @@ public final class LocationUtil {
    */
   @NotNull
   public static String toKey(@NotNull final Location location) {
-    String s = LocationUtil.validWorld(location).getName() + ':';
-    s += String.format(
-      Locale.ENGLISH,
-      "%.2f,%.2f,%.2f",
-      location.getX(), location.getY(), location.getZ());
+    var s = LocationUtil.validWorld(location).getName() + ':';
+    s += String.format(Locale.ENGLISH, "%.2f,%.2f,%.2f", location.getX(), location.getY(), location.getZ());
     if (location.getYaw() != 0.0f || location.getPitch() != 0.0f) {
-      s += String.format(
-        Locale.ENGLISH,
-        ":%.2f:%.2f",
-        location.getYaw(), location.getPitch());
+      s += String.format(Locale.ENGLISH, ":%.2f:%.2f", location.getYaw(), location.getPitch());
     }
-    return s.replace(":", "/")
-      .replace(".", "_");
+    return s.replace(":", "/").replace(".", "_");
+  }
+
+  /**
+   * gets the world of the given location.
+   *
+   * @param location the location to get.
+   *
+   * @return world of the location.
+   *
+   * @throws IllegalStateException if the given location has not a world.
+   */
+  @NotNull
+  public static World validWorld(@NotNull final Location location) {
+    return Optional.ofNullable(location.getWorld()).orElseThrow(() ->
+      new IllegalStateException("World of the location cannot be null!"));
   }
 
   /**

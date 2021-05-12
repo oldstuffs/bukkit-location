@@ -4,12 +4,13 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import java.util.Optional;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 final class LocationUtilTest {
 
@@ -28,22 +29,10 @@ final class LocationUtilTest {
   }
 
   @Test
-  void centeredOn() {
-    final Location location = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d);
-    final Location expected = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.5d, 100.1d, 100.5d);
-    final Location centeredOn = LocationUtil.centeredOn(location);
-    new Assertion<>(
-      "Couldn't calculate the centered on of the location!",
-      centeredOn,
-      new IsEqual<>(expected)
-    ).affirm();
-  }
-
-  @Test
   void centeredIn() {
-    final Location location = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d);
-    final Location expected = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.5d, 100.5d, 100.5d);
-    final Location centeredIn = LocationUtil.centeredIn(location);
+    final var location = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d);
+    final var expected = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.5d, 100.5d, 100.5d);
+    final var centeredIn = LocationUtil.centeredIn(location);
     new Assertion<>(
       "Couldn't calculate the centered in of the location!",
       centeredIn,
@@ -52,21 +41,37 @@ final class LocationUtilTest {
   }
 
   @Test
-  void validWorld() {
-    final World expected = LocationUtilTest.serverMock.getWorld("world");
-    final Location location = new Location(expected, 100.0d, 100.0d, 100.0d);
+  void centeredOn() {
+    final var location = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d);
+    final var expected = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.5d, 100.1d, 100.5d);
+    final var centeredOn = LocationUtil.centeredOn(location);
     new Assertion<>(
-      "The location's world is not valid!",
-      LocationUtil.validWorld(location),
+      "Couldn't calculate the centered on of the location!",
+      centeredOn,
       new IsEqual<>(expected)
     ).affirm();
   }
 
   @Test
+  void doesNotMatch() {
+    final var location = LocationUtil.fromKey("test");
+    new Assertion<>(
+      "Something went wrong",
+      location.isEmpty(),
+      new IsTrue()
+    ).affirm();
+    new Assertion<>(
+      "Something went wrong",
+      location.isPresent(),
+      new IsNot<>(new IsTrue())
+    ).affirm();
+  }
+
+  @Test
   void fromKey() {
-    final Optional<Location> expected = Optional.of(new Location(LocationUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d));
-    final String key = "world/100_0,100_0,100_0";
-    final Optional<Location> optional = LocationUtil.fromKey(key);
+    final var expected = Optional.of(new Location(LocationUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d));
+    final var key = "world/100_0,100_0,100_0";
+    final var optional = LocationUtil.fromKey(key);
     new Assertion<>(
       "Couldn't parse the key into the location!",
       optional,
@@ -76,11 +81,22 @@ final class LocationUtilTest {
 
   @Test
   void toKey() {
-    final Location location = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d);
-    final String expected = "world/100_00,100_00,100_00";
+    final var location = new Location(LocationUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d);
+    final var expected = "world/100_00,100_00,100_00";
     new Assertion<>(
       "Couldn't parse the key into the location!",
       LocationUtil.toKey(location),
+      new IsEqual<>(expected)
+    ).affirm();
+  }
+
+  @Test
+  void validWorld() {
+    final var expected = LocationUtilTest.serverMock.getWorld("world");
+    final var location = new Location(expected, 100.0d, 100.0d, 100.0d);
+    new Assertion<>(
+      "The location's world is not valid!",
+      LocationUtil.validWorld(location),
       new IsEqual<>(expected)
     ).affirm();
   }

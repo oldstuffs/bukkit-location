@@ -25,7 +25,6 @@
 
 package io.github.portlek.bukkitlocation;
 
-import java.util.Arrays;
 import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -75,13 +74,12 @@ public final class DirectionUtil {
    */
   @NotNull
   public static Directions directionOf(final float yaw) {
-    return DirectionUtil.directionOf(
-      Arrays.asList(
-        Directions.SOUTH,
-        Directions.WEST,
-        Directions.NORTH,
-        Directions.EAST),
-      yaw);
+    final var directions = List.of(
+      Directions.SOUTH,
+      Directions.WEST,
+      Directions.NORTH,
+      Directions.EAST);
+    return DirectionUtil.directionOf(directions, yaw);
   }
 
   /**
@@ -117,17 +115,16 @@ public final class DirectionUtil {
    */
   @NotNull
   public static Directions doubleDirectionOf(final float yaw) {
-    return DirectionUtil.doubleDirectionOf(
-      Arrays.asList(
-        Directions.SOUTH,
-        Directions.SOUTHWEST,
-        Directions.WEST,
-        Directions.NORTHWEST,
-        Directions.NORTH,
-        Directions.NORTHEAST,
-        Directions.EAST,
-        Directions.SOUTHEAST),
-      yaw);
+    final var directions = List.of(
+      Directions.SOUTH,
+      Directions.SOUTHWEST,
+      Directions.WEST,
+      Directions.NORTHWEST,
+      Directions.NORTH,
+      Directions.NORTHEAST,
+      Directions.EAST,
+      Directions.SOUTHEAST);
+    return DirectionUtil.doubleDirectionOf(directions, yaw);
   }
 
   /**

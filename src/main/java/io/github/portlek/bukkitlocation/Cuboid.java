@@ -25,48 +25,20 @@
 
 package io.github.portlek.bukkitlocation;
 
+import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * a class that contains minimum and maximum location to make a cuboid.
+ */
 public final class Cuboid {
-
-  /**
-   * the minimum location.
-   */
-  @NotNull
-  private final Location minimumLocation;
-
-  /**
-   * the maximum location.
-   */
-  @NotNull
-  private final Location maximumLocation;
-
-  /**
-   * the common world.
-   */
-  @NotNull
-  private final World world;
-
-  /**
-   * the minimum x.
-   */
-  private final double minX;
-
-  /**
-   * the minimum y.
-   */
-  private final double minY;
-
-  /**
-   * the minimum z.
-   */
-  private final double minZ;
 
   /**
    * the maximum x.
@@ -84,17 +56,53 @@ public final class Cuboid {
   private final double maxZ;
 
   /**
+   * the maximum location.
+   */
+  @NotNull
+  @Getter
+  private final Location maximumLocation;
+
+  /**
+   * the minimum x.
+   */
+  private final double minX;
+
+  /**
+   * the minimum y.
+   */
+  private final double minY;
+
+  /**
+   * the minimum z.
+   */
+  private final double minZ;
+
+  /**
+   * the minimum location.
+   */
+  @NotNull
+  @Getter
+  private final Location minimumLocation;
+
+  /**
+   * the common world.
+   */
+  @NotNull
+  private final World world;
+
+  /**
    * ctor.
    *
    * @param minimumLocation the minimum location.
    * @param maximumLocation the maximum location.
+   *
+   * @throws IllegalStateException if worlds of the given locations are not same.
    */
   public Cuboid(@NotNull final Location minimumLocation, @NotNull final Location maximumLocation) {
-    final World minimumWorld = LocationUtil.validWorld(minimumLocation);
-    final World maximumWorld = LocationUtil.validWorld(maximumLocation);
-    if (!minimumWorld.equals(maximumWorld)) {
-      throw new IllegalStateException(minimumWorld + " and " + maximumWorld + " are not equals!");
-    }
+    final var minimumWorld = LocationUtil.validWorld(minimumLocation);
+    final var maximumWorld = LocationUtil.validWorld(maximumLocation);
+    Preconditions.checkState(minimumWorld.equals(maximumWorld), "%s and %s are not equals!",
+      minimumWorld, maximumWorld);
     this.minimumLocation = minimumLocation;
     this.maximumLocation = maximumLocation;
     this.world = minimumWorld;
@@ -107,33 +115,13 @@ public final class Cuboid {
   }
 
   /**
-   * obtains the minimum location of {@code this}.
-   *
-   * @return the minimum location.
-   */
-  @NotNull
-  public Location getMinimumLocation() {
-    return this.minimumLocation;
-  }
-
-  /**
-   * obtains the maximum location of {@code this}.
-   *
-   * @return the maximum location.
-   */
-  @NotNull
-  public Location getMaximumLocation() {
-    return this.maximumLocation;
-  }
-
-  /**
    * obtains blocks inside the cuboid.
    *
    * @return the block list within the cuboid.
    */
   @NotNull
   public List<Block> blocks() {
-    final List<Block> result = new ArrayList<>();
+    final var result = new ArrayList<Block>();
     for (double x = this.minX; x <= this.maxX; ++x) {
       for (double y = this.minY; y <= this.maxY; ++y) {
         for (double z = this.minZ; z <= this.maxZ; ++z) {
@@ -142,47 +130,6 @@ public final class Cuboid {
       }
     }
     return result;
-  }
-
-  /**
-   * obtains locations inside the cuboid.
-   *
-   * @return the location list within the cuboid.
-   */
-  @NotNull
-  public List<Location> locations() {
-    final List<Location> result = new ArrayList<>();
-    for (double x = this.minX; x <= this.maxX; ++x) {
-      for (double y = this.minY; y <= this.maxY; ++y) {
-        for (double z = this.minZ; z <= this.maxZ; ++z) {
-          result.add(new Location(this.world, x, y, z));
-        }
-      }
-    }
-    return result;
-  }
-
-  /**
-   * sets all blocks inside the cuboid.
-   *
-   * @param material the material to set.
-   */
-  public void set(@NotNull final Material material) {
-    this.blocks().forEach(block -> block.setType(material));
-  }
-
-  /**
-   * obtains center bottom of the cuboid.
-   *
-   * @return center bottom of the cuboid.
-   */
-  @NotNull
-  public Location centerBottom() {
-    return new Location(
-      this.world,
-      this.minX + (this.maxX - this.minX) / 2.0d,
-      this.minY,
-      this.minZ + (this.maxZ - this.minZ) / 2.0d);
   }
 
   /**
@@ -200,6 +147,20 @@ public final class Cuboid {
   }
 
   /**
+   * obtains center bottom of the cuboid.
+   *
+   * @return center bottom of the cuboid.
+   */
+  @NotNull
+  public Location centerBottom() {
+    return new Location(
+      this.world,
+      this.minX + (this.maxX - this.minX) / 2.0d,
+      this.minY,
+      this.minZ + (this.maxZ - this.minZ) / 2.0d);
+  }
+
+  /**
    * checks if the given location is in the cuboid.
    *
    * @param location the location to check.
@@ -213,11 +174,21 @@ public final class Cuboid {
   }
 
   /**
-   * removes all blocks where are in the cuboid.
+   * obtains locations inside the cuboid.
+   *
+   * @return the location list within the cuboid.
    */
-  public void removeAll() {
-    this.blocks().forEach(block ->
-      block.setType(Material.AIR));
+  @NotNull
+  public List<Location> locations() {
+    final var result = new ArrayList<Location>();
+    for (double x = this.minX; x <= this.maxX; ++x) {
+      for (double y = this.minY; y <= this.maxY; ++y) {
+        for (double z = this.minZ; z <= this.maxZ; ++z) {
+          result.add(new Location(this.world, x, y, z));
+        }
+      }
+    }
+    return result;
   }
 
   /**
@@ -244,5 +215,21 @@ public final class Cuboid {
   @NotNull
   public List<Location> randomLocations(final int limit, final boolean duplicate) {
     return RandomUtil.chooseRandoms(this.locations(), limit, duplicate);
+  }
+
+  /**
+   * removes all blocks where are in the cuboid.
+   */
+  public void removeAll() {
+    this.blocks().forEach(block -> block.setType(Material.AIR));
+  }
+
+  /**
+   * sets all blocks inside the cuboid.
+   *
+   * @param material the material to set.
+   */
+  public void set(@NotNull final Material material) {
+    this.blocks().forEach(block -> block.setType(material));
   }
 }
