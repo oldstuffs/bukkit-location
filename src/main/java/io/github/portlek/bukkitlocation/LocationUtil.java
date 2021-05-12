@@ -27,7 +27,6 @@ package io.github.portlek.bukkitlocation;
 
 import java.util.Locale;
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -89,14 +88,14 @@ public final class LocationUtil {
       .replace("_", ".")
       .replace("/", ":"));
     if (match.matches()) {
-      final World world = Bukkit.getWorld(match.group("world"));
-      final double x = NumberConversions.toDouble(match.group("x"));
-      final double y = NumberConversions.toDouble(match.group("y"));
-      final double z = NumberConversions.toDouble(match.group("z"));
-      final Float yaw = Optional.ofNullable(match.group("yaw"))
+      final var world = Bukkit.getWorld(match.group("world"));
+      final var x = NumberConversions.toDouble(match.group("x"));
+      final var y = NumberConversions.toDouble(match.group("y"));
+      final var z = NumberConversions.toDouble(match.group("z"));
+      final var yaw = Optional.ofNullable(match.group("yaw"))
         .map(NumberConversions::toFloat)
         .orElse(0.0f);
-      final Float pitch = Optional.ofNullable(match.group("pitch"))
+      final var pitch = Optional.ofNullable(match.group("pitch"))
         .map(NumberConversions::toFloat)
         .orElse(0.0f);
       return Optional.of(new Location(world, x, y, z, yaw, pitch));
@@ -113,7 +112,7 @@ public final class LocationUtil {
    */
   @NotNull
   public static String toKey(@NotNull final Location location) {
-    String s = LocationUtil.validWorld(location).getName() + ':';
+    var s = LocationUtil.validWorld(location).getName() + ':';
     s += String.format(
       Locale.ENGLISH,
       "%.2f,%.2f,%.2f",

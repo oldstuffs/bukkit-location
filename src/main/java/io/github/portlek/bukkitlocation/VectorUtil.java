@@ -50,8 +50,8 @@ public final class VectorUtil {
    */
   @NotNull
   public static Vector rotateAroundAxisX(@NotNull final Vector vector, final double angle) {
-    final double cos = StrictMath.cos(angle);
-    final double sin = StrictMath.sin(angle);
+    final var cos = StrictMath.cos(angle);
+    final var sin = StrictMath.sin(angle);
     return vector
       .setY(vector.getY() * cos - vector.getZ() * sin)
       .setZ(vector.getY() * sin + vector.getZ() * cos);
@@ -67,8 +67,8 @@ public final class VectorUtil {
    */
   @NotNull
   public static Vector rotateAroundAxisY(@NotNull final Vector vector, final double angle) {
-    final double cos = StrictMath.cos(angle);
-    final double sin = StrictMath.sin(angle);
+    final var cos = StrictMath.cos(angle);
+    final var sin = StrictMath.sin(angle);
     return vector
       .setX(vector.getX() * cos + vector.getZ() * sin)
       .setZ(vector.getX() * -sin + vector.getZ() * cos);
@@ -84,8 +84,8 @@ public final class VectorUtil {
    */
   @NotNull
   public static Vector rotateAroundAxisZ(@NotNull final Vector vector, final double angle) {
-    final double cos = StrictMath.cos(angle);
-    final double sin = StrictMath.sin(angle);
+    final var cos = StrictMath.cos(angle);
+    final var sin = StrictMath.sin(angle);
     return vector
       .setX(vector.getX() * cos - vector.getY() * sin)
       .setY(vector.getX() * sin + vector.getY() * cos);
@@ -104,7 +104,11 @@ public final class VectorUtil {
   @NotNull
   public static Vector rotateVector(@NotNull final Vector vector, final double angleX, final double angleY,
                                     final double angleZ) {
-    return VectorUtil.rotateAroundAxisZ(VectorUtil.rotateAroundAxisY(VectorUtil.rotateAroundAxisX(vector, angleX), angleY), angleZ);
+    return VectorUtil.rotateAroundAxisZ(
+      VectorUtil.rotateAroundAxisY(
+        VectorUtil.rotateAroundAxisX(vector, angleX),
+        angleY),
+      angleZ);
   }
 
   /**
@@ -130,21 +134,20 @@ public final class VectorUtil {
    * @return a new rotated vector.
    */
   @NotNull
-  public static Vector rotateVector(@NotNull final Vector vector, final Float yawDegrees, final Float pitchDegrees) {
-    final double yaw = Math.toRadians(-1.0d * (yawDegrees.doubleValue() + 90.0d));
-    final double pitch = Math.toRadians(-pitchDegrees.doubleValue());
-    final double cosYaw = StrictMath.cos(yaw);
-    final double cosPitch = StrictMath.cos(pitch);
-    final double sinYaw = StrictMath.sin(yaw);
-    final double sinPitch = StrictMath.sin(pitch);
-    final double initialX = vector.getX() * cosPitch - vector.getY() * sinPitch;
-    final double initialY = vector.getY();
-    final double initialZ = vector.getZ();
-    final double x = initialX * cosPitch - initialY * sinPitch;
+  public static Vector rotateVector(@NotNull final Vector vector, final double yawDegrees, final double pitchDegrees) {
+    final var yaw = Math.toRadians(-1.0d * (yawDegrees + 90.0d));
+    final var pitch = Math.toRadians(-pitchDegrees);
+    final var cosYaw = StrictMath.cos(yaw);
+    final var cosPitch = StrictMath.cos(pitch);
+    final var sinYaw = StrictMath.sin(yaw);
+    final var sinPitch = StrictMath.sin(pitch);
+    final var initialX = vector.getX() * cosPitch - vector.getY() * sinPitch;
+    final var initialY = vector.getY();
+    final var initialZ = vector.getZ();
+    final var x = initialX * cosPitch - initialY * sinPitch;
     return new Vector(
       initialZ * sinYaw + x * cosYaw,
       initialX * sinPitch + initialY * cosPitch,
-      initialZ * cosYaw - x * sinYaw
-    );
+      initialZ * cosYaw - x * sinYaw);
   }
 }
