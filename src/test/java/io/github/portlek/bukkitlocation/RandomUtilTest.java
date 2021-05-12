@@ -1,9 +1,10 @@
 package io.github.portlek.bukkitlocation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.AnyOf;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
@@ -15,14 +16,14 @@ final class RandomUtilTest {
 
   @Test
   void chooseRandoms() {
-    final List<Integer> nonduplicatedlist = Arrays.asList(1, 1, 1, 1, 5, 6, 7, 8, 9);
-    final List<Integer> nonduplicated = RandomUtil.chooseRandoms(nonduplicatedlist, 5, false);
+    final var nonduplicatedlist = List.of(1, 1, 1, 1, 5, 6, 7, 8, 9);
+    final var nonduplicated = RandomUtil.chooseRandoms(nonduplicatedlist, 5, false);
     new Assertion<>(
       "Couldn't choose correct amount of random numbers!",
       nonduplicated.size(),
       new IsEqual<>(5)
     ).affirm();
-    final List<Integer> duplicates = new ArrayList<>();
+    final var duplicates = new ArrayList<Integer>();
     new Assertion<>(
       "Numbers are duplicated!",
       nonduplicated.stream().anyMatch(integer -> {
@@ -35,8 +36,8 @@ final class RandomUtilTest {
       new IsNot<>(new IsTrue())
     ).affirm();
     duplicates.clear();
-    final List<Integer> duplicatedlist = Arrays.asList(1, 1, 1, 1, 5);
-    final List<Integer> duplicated = RandomUtil.chooseRandoms(duplicatedlist, 5, true);
+    final var duplicatedlist = List.of(1, 1, 1, 1, 5);
+    final var duplicated = RandomUtil.chooseRandoms(duplicatedlist, 5, true);
     new Assertion<>(
       "Couldn't choose correct amount of random numbers!",
       duplicated.size(),
@@ -64,5 +65,15 @@ final class RandomUtilTest {
       )
     ).affirm();
     duplicates.clear();
+  }
+
+  @Test
+  void empty() {
+    final var randoms = RandomUtil.chooseRandoms(Collections.emptyList(), 1, false);
+    new Assertion<>(
+      "It's not empty",
+      randoms,
+      new IsEmptyCollection<>()
+    ).affirm();
   }
 }

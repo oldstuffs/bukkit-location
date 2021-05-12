@@ -113,18 +113,11 @@ public final class LocationUtil {
   @NotNull
   public static String toKey(@NotNull final Location location) {
     var s = LocationUtil.validWorld(location).getName() + ':';
-    s += String.format(
-      Locale.ENGLISH,
-      "%.2f,%.2f,%.2f",
-      location.getX(), location.getY(), location.getZ());
+    s += String.format(Locale.ENGLISH, "%.2f,%.2f,%.2f", location.getX(), location.getY(), location.getZ());
     if (location.getYaw() != 0.0f || location.getPitch() != 0.0f) {
-      s += String.format(
-        Locale.ENGLISH,
-        ":%.2f:%.2f",
-        location.getYaw(), location.getPitch());
+      s += String.format(Locale.ENGLISH, ":%.2f:%.2f", location.getYaw(), location.getPitch());
     }
-    return s.replace(":", "/")
-      .replace(".", "_");
+    return s.replace(":", "/").replace(".", "_");
   }
 
   /**

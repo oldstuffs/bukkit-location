@@ -3,7 +3,6 @@ package io.github.portlek.bukkitlocation;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,32 +28,7 @@ final class DirectionUtilTest {
 
   @Test
   void directionOf() {
-    final Directions directions = DirectionUtil.directionOf(100.0f);
-    new Assertion<>(
-      "Couldn't get direction correctly!",
-      directions,
-      new IsEqual<>(Directions.WEST)
-    ).affirm();
-  }
-
-  @Test
-  void testDirectionOf() {
-    final Location location = new Location(DirectionUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d, 100.0f, 50.0f);
-    final Directions directions = DirectionUtil.directionOf(location);
-    new Assertion<>(
-      "Couldn't get direction correctly!",
-      directions,
-      new IsEqual<>(Directions.WEST)
-    ).affirm();
-  }
-
-  @Test
-  void testDirectionOf1() {
-    final Location location = new Location(DirectionUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d, 100.0f, 50.0f);
-    final Player player = DirectionUtilTest.serverMock.getPlayer("player");
-    assert player != null;
-    player.teleport(location);
-    final Directions directions = DirectionUtil.directionOf(player);
+    final var directions = DirectionUtil.directionOf(100.0f);
     new Assertion<>(
       "Couldn't get direction correctly!",
       directions,
@@ -64,7 +38,32 @@ final class DirectionUtilTest {
 
   @Test
   void doubleDirectionOf() {
-    final Directions directions = DirectionUtil.doubleDirectionOf(100.0f);
+    final var directions = DirectionUtil.doubleDirectionOf(100.0f);
+    new Assertion<>(
+      "Couldn't get direction correctly!",
+      directions,
+      new IsEqual<>(Directions.WEST)
+    ).affirm();
+  }
+
+  @Test
+  void testDirectionOf() {
+    final var location = new Location(DirectionUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d, 100.0f, 50.0f);
+    final var directions = DirectionUtil.directionOf(location);
+    new Assertion<>(
+      "Couldn't get direction correctly!",
+      directions,
+      new IsEqual<>(Directions.WEST)
+    ).affirm();
+  }
+
+  @Test
+  void testDirectionOf1() {
+    final var location = new Location(DirectionUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d, 100.0f, 50.0f);
+    final var player = DirectionUtilTest.serverMock.getPlayer("player");
+    assert player != null;
+    player.teleport(location);
+    final var directions = DirectionUtil.directionOf(player);
     new Assertion<>(
       "Couldn't get direction correctly!",
       directions,
@@ -74,8 +73,8 @@ final class DirectionUtilTest {
 
   @Test
   void testDoubleDirectionOf() {
-    final Location location = new Location(DirectionUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d, 100.0f, 50.0f);
-    final Directions directions = DirectionUtil.doubleDirectionOf(location);
+    final var location = new Location(DirectionUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d, 100.0f, 50.0f);
+    final var directions = DirectionUtil.doubleDirectionOf(location);
     new Assertion<>(
       "Couldn't get direction correctly!",
       directions,
@@ -85,11 +84,11 @@ final class DirectionUtilTest {
 
   @Test
   void testDoubleDirectionOf1() {
-    final Location location = new Location(DirectionUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d, 100.0f, 50.0f);
-    final Player player = DirectionUtilTest.serverMock.getPlayer("player");
+    final var location = new Location(DirectionUtilTest.serverMock.getWorld("world"), 100.0d, 100.0d, 100.0d, 100.0f, 50.0f);
+    final var player = DirectionUtilTest.serverMock.getPlayer("player");
     assert player != null;
     player.teleport(location);
-    final Directions directions = DirectionUtil.doubleDirectionOf(player);
+    final var directions = DirectionUtil.doubleDirectionOf(player);
     new Assertion<>(
       "Couldn't get direction correctly!",
       directions,
