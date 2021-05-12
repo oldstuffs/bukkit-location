@@ -53,18 +53,6 @@ public final class LocationUtil {
   }
 
   /**
-   * calculates the center bottom of the given location.
-   *
-   * @param location the location to calculate.
-   *
-   * @return location of the center from the given location.
-   */
-  @NotNull
-  public static Location centeredOn(@NotNull final Location location) {
-    return LocationUtil.centered(location, 0.1d);
-  }
-
-  /**
    * calculates the center of the given location.
    *
    * @param location the location to calculate.
@@ -77,18 +65,15 @@ public final class LocationUtil {
   }
 
   /**
-   * gets the world of the given location.
+   * calculates the center bottom of the given location.
    *
-   * @param location the location to get.
+   * @param location the location to calculate.
    *
-   * @return world of the location.
-   *
-   * @throws IllegalStateException if the given location has not a world.
+   * @return location of the center from the given location.
    */
   @NotNull
-  public static World validWorld(@NotNull final Location location) {
-    return Optional.ofNullable(location.getWorld()).orElseThrow(() ->
-      new IllegalStateException("World of the location cannot be null!"));
+  public static Location centeredOn(@NotNull final Location location) {
+    return LocationUtil.centered(location, 0.1d);
   }
 
   /**
@@ -141,6 +126,21 @@ public final class LocationUtil {
     }
     return s.replace(":", "/")
       .replace(".", "_");
+  }
+
+  /**
+   * gets the world of the given location.
+   *
+   * @param location the location to get.
+   *
+   * @return world of the location.
+   *
+   * @throws IllegalStateException if the given location has not a world.
+   */
+  @NotNull
+  public static World validWorld(@NotNull final Location location) {
+    return Optional.ofNullable(location.getWorld()).orElseThrow(() ->
+      new IllegalStateException("World of the location cannot be null!"));
   }
 
   /**
