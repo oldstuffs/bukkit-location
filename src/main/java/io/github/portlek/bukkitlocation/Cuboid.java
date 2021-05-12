@@ -25,8 +25,10 @@
 
 package io.github.portlek.bukkitlocation;
 
+import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -54,6 +56,7 @@ public final class Cuboid {
    * the maximum location.
    */
   @NotNull
+  @Getter
   private final Location maximumLocation;
 
   /**
@@ -75,6 +78,7 @@ public final class Cuboid {
    * the minimum location.
    */
   @NotNull
+  @Getter
   private final Location minimumLocation;
 
   /**
@@ -88,13 +92,14 @@ public final class Cuboid {
    *
    * @param minimumLocation the minimum location.
    * @param maximumLocation the maximum location.
+   *
+   * @throws IllegalStateException if worlds of the given locations are not same.
    */
   public Cuboid(@NotNull final Location minimumLocation, @NotNull final Location maximumLocation) {
-    final World minimumWorld = LocationUtil.validWorld(minimumLocation);
-    final World maximumWorld = LocationUtil.validWorld(maximumLocation);
-    if (!minimumWorld.equals(maximumWorld)) {
-      throw new IllegalStateException(minimumWorld + " and " + maximumWorld + " are not equals!");
-    }
+    final var minimumWorld = LocationUtil.validWorld(minimumLocation);
+    final var maximumWorld = LocationUtil.validWorld(maximumLocation);
+    Preconditions.checkState(minimumWorld.equals(maximumWorld), "%s and %s are not equals!",
+      minimumWorld, maximumWorld);
     this.minimumLocation = minimumLocation;
     this.maximumLocation = maximumLocation;
     this.world = minimumWorld;
@@ -113,7 +118,7 @@ public final class Cuboid {
    */
   @NotNull
   public List<Block> blocks() {
-    final List<Block> result = new ArrayList<>();
+    final var result = new ArrayList<Block>();
     for (double x = this.minX; x <= this.maxX; ++x) {
       for (double y = this.minY; y <= this.maxY; ++y) {
         for (double z = this.minZ; z <= this.maxZ; ++z) {
@@ -153,26 +158,6 @@ public final class Cuboid {
   }
 
   /**
-   * obtains the maximum location of {@code this}.
-   *
-   * @return the maximum location.
-   */
-  @NotNull
-  public Location getMaximumLocation() {
-    return this.maximumLocation;
-  }
-
-  /**
-   * obtains the minimum location of {@code this}.
-   *
-   * @return the minimum location.
-   */
-  @NotNull
-  public Location getMinimumLocation() {
-    return this.minimumLocation;
-  }
-
-  /**
    * checks if the given location is in the cuboid.
    *
    * @param location the location to check.
@@ -192,7 +177,7 @@ public final class Cuboid {
    */
   @NotNull
   public List<Location> locations() {
-    final List<Location> result = new ArrayList<>();
+    final var result = new ArrayList<Location>();
     for (double x = this.minX; x <= this.maxX; ++x) {
       for (double y = this.minY; y <= this.maxY; ++y) {
         for (double z = this.minZ; z <= this.maxZ; ++z) {
@@ -233,8 +218,7 @@ public final class Cuboid {
    * removes all blocks where are in the cuboid.
    */
   public void removeAll() {
-    this.blocks().forEach(block ->
-      block.setType(Material.AIR));
+    this.blocks().forEach(block -> block.setType(Material.AIR));
   }
 
   /**
