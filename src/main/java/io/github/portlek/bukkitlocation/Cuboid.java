@@ -35,6 +35,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * a class that contains minimum and maximum location to make a cuboid.
+ */
 public final class Cuboid {
 
   /**

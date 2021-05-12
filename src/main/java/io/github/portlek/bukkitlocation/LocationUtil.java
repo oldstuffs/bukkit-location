@@ -85,7 +85,7 @@ public final class LocationUtil {
    */
   @NotNull
   public static Optional<Location> fromKey(@NotNull final String key) {
-    final Matcher match = LocationUtil.PATTERN.matcher(key
+    final var match = LocationUtil.PATTERN.matcher(key
       .replace("_", ".")
       .replace("/", ":"));
     if (match.matches()) {
