@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Hasan Demirtaş
+ * Copyright (c) 2021 Hasan Demirtaş
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -108,7 +108,7 @@ public final class VectorUtil {
   }
 
   /**
-   * rotates the given vector around the given location
+   * rotates the given vector around the given location.
    *
    * @param vector the vector to rotate.
    * @param location the location to rotate.

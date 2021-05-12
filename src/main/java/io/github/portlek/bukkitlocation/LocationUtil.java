@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Hasan Demirtaş
+ * Copyright (c) 2021 Hasan Demirtaş
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ import org.jetbrains.annotations.NotNull;
 public final class LocationUtil {
 
   /**
-   * the location pattern which looks like WORLD/X_X/Y_Y/Z_Z/YAW_YAW/PITCH_PITCH
+   * the location pattern which looks like WORLD/X_X/Y_Y/Z_Z/YAW_YAW/PITCH_PITCH.
    */
   private static final Pattern PATTERN =
     Pattern.compile("(?<world>[^/]+):(?<x>[\\-0-9.]+),(?<y>[\\-0-9.]+),(?<z>[\\-0-9.]+)(:(?<yaw>[\\-0-9.]+):(?<pitch>[\\-0-9.]+))?");
