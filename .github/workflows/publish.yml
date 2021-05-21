@@ -52,9 +52,3 @@ jobs:
           body: '[Changelog](https://github.com/portlek/bukkit-location/compare/${{ steps.version.outputs.release }}...${{ steps.bump-semver.outputs.new_version }})'
 
       - uses: badasintended/autojitpack@v0
-
-      - uses: zwaldowski/git-commit-action@v1
-        with:
-          commit_message: 'v${{ steps.bump-semver.outputs.new_version }}'
-
-      - run: git push
