@@ -76,6 +76,6 @@ repositories {
 
 ```groovy
 dependencies {
-  implementation("io.github.portlek:bukkit-location:${version}")
+  implementation("com.github.portlek:bukkit-location:${version}")
 }
 ```
