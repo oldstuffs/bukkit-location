@@ -26,8 +26,8 @@
             <!-- Relocations(Optional)
             <relocations>
               <relocation>
-                  <pattern>io.github.portlek.bukkitlocation</pattern>
-                  <shadedPattern>[YOUR_PLUGIN_PACKAGE].shade</shadedPattern>
+                <pattern>io.github.portlek.bukkitlocation</pattern>
+                <shadedPattern>[YOUR_PLUGIN_PACKAGE].shade</shadedPattern>
               </relocation>
             </relocations>
             -->
