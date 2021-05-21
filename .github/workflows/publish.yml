@@ -53,6 +53,8 @@ jobs:
 
       - uses: badasintended/autojitpack@v0
 
-      - uses: actions-go/push@master
+      - uses: zwaldowski/git-commit-action@v1
         with:
-          commit-message: 'v${{ steps.bump-semver.outputs.new_version }}'
+          commit_message: 'v${{ steps.bump-semver.outputs.new_version }}'
+
+      - run: git push
