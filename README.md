@@ -51,7 +51,7 @@
 ```xml
 <dependencies>
   <dependency>
-    <groupId>io.github.portlek</groupId>
+    <groupId>com.github.portlek</groupId>
     <artifactId>bukkit-location</artifactId>
     <version>${version}</version>
   </dependency>
