@@ -51,7 +51,7 @@
 ```xml
 <dependencies>
   <dependency>
-    <groupId>io.github.portlek</groupId>
+    <groupId>com.github.portlek</groupId>
     <artifactId>bukkit-location</artifactId>
     <version>${version}</version>
   </dependency>
@@ -76,6 +76,6 @@ repositories {
 
 ```groovy
 dependencies {
-  implementation("io.github.portlek:bukkit-location:${version}")
+  implementation("com.github.portlek:bukkit-location:${version}")
 }
 ```
